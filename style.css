@@ -1,0 +1,22 @@
+.page-header h1{
+  margin: 5% 0;
+  font-weight:bold;
+}
+
+input{
+  margin: 20px 0;
+}
+
+form {
+  margin-top:10%;
+}
+
+.book-display h2{
+  font-weight:bold;
+}
+
+
+.title-bad {
+  background-color:red;
+  
+}
