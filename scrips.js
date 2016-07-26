@@ -23,22 +23,17 @@ $(document).ajaxComplete(function(){
 
 
 
-var fetch = function (isbn) {   //gets the isbn input from the user and looks for the book
+var fetch = function (input) {   //gets the isbn input from the user and looks for the book
   $.ajax({
     method: "GET",
-    url: 'https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn,
+    url: 'https://www.googleapis.com/books/v1/volumes?q=:' + input,
     dataType: "json",
     success: function(data) {
 // console.log(data);
-    var title = data.items[0].volumeInfo.title;             //after finding book returns the following info saved into variables
-    var author = data.items[0].volumeInfo.authors[0];
-    var description = data.items[0].volumeInfo.description;
-    var imageUrl = data.items[0].volumeInfo.imageLinks.thumbnail;
-    var pagesNo = data.items[0].volumeInfo.pageCount;
 
-    createBook(title, author, description, imageUrl, pagesNo);      //after getting the variables, calls the createBook function
-       
-    },
+      createBook(data);      //after getting the variables, calls the createBook function
+       },
+    
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
     }
@@ -49,32 +44,35 @@ var fetch = function (isbn) {   //gets the isbn input from the user and looks fo
 }
 
 
-var createBook = function(title,author,description,imageUrl,pagesNo){  //NEED TO ADD HOW LONG WILL IT TAKE TO READ
+var createBook = function(data){  //NEED TO ADD HOW LONG WILL IT TAKE TO READ
   //this function gets the input from the search with AJAX and pushes them into an array
-
+  for (var i = 0; i < 10 ; i++){
   var book = {
-    title:title,
-    author:author,
-    description:description,
-    imageUrl:imageUrl,
-    pagesNo:pagesNo
+    title:data.items[i].volumeInfo.title,
+    author:data.items[i].volumeInfo.authors[0],
+    description:data.items[i].volumeInfo.description,
+    imageUrl:data.items[i].volumeInfo.imageLinks.thumbnail,
+    pagesNo:data.items[i].volumeInfo.pageCount
 
   };
-
+  
   bookArray.books.push(book); //push the book into array
   showBook(book);       //after pushing the info into the array, calls to the showBook function to display the searched book
+  
+  }
 
 }
 
-var showBook = function (book){           //displays the information searched for. after displaying, splices the array to empty it in case of a new search
-  $('.book-display').empty();             //before it will display another book the user searched for it will empty the array
+var showBook = function (book){ 
+          //displays the information searched for. after displaying, splices the array to empty it in case of a new search
+  $('.show-books').empty();             //before it will display another book the user searched for it will empty the array
   var source = $('#books-template').html();
   var template = Handlebars.compile(source);
   var newHTML = template(bookArray);
 
-  $('.book-display').append(newHTML);
+  $('.show-books').append(newHTML);
 
-  bookArray.books.splice(0,bookArray.books.length);
+  // bookArray.books.splice(0,bookArray.books.length);
 
 }
 
@@ -82,8 +80,11 @@ var showBook = function (book){           //displays the information searched fo
 
 $('.add-book').on('click', function (e) {
   e.preventDefault();
-  var isbn = $('#book-isbn').val();
-  fetch(isbn);
+  // var isbn = $('#book-isbn').val();
+  var userInput = $('#book-isbn').val();
+  // var input = userInput.replace(/ /g, "+");
+  var input = userInput.split(" ").join("+");
+  fetch(input);
 });
 
 

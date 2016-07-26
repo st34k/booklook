@@ -20,58 +20,67 @@
       <div class="page-header">
         <h1>BookLook <i class="fa fa-eye" aria-hidden="true"></i></h1>
 
-        <div class = "book-display">
-        </div>
+        <!-- <div class = "book-display">
+        </div> -->
       </div>  
           
       <form class="book-form">
         <div class="form-group">
-          <h3>Search by ISBN</h3>
-          <input type="text" id="book-isbn" class="form-control" placeholder="ISBN number">
+          <h3>Search by ISBN / Book Title</h3>
+          <input type="text" id="book-isbn" class="form-control" placeholder="ISBN number or Book Title">
           </input>
 
-         <!--  <input type="text" id="book-author" class="form-control" placeholder="Book Author">
-          </input>
-
-          <input type="text" id="book-description" class="form-control" placeholder="Book Description">
-          </input>
-
-          <input type="text" id="book-img" class="form-control" placeholder="Image URL">
-          </input>
-
-          <input type="text" id="book-pages" class="form-control" placeholder="Number of Pages">
-          </input>
-
-          <input type="text" id="book-readtime" class="form-control" placeholder="Minutes You Read Per Day">
-          </input> -->
+         
         </div>
 
         <button class="btn btn-primary add-book">Search</button>
       </form>
-       
+
        <div id="wait"><img src='magnify.gif' width="64" height="64" /><br>Loading..</div>
     </div>
   </div>
 
+  <div class="row">
+    <div class="show-books">
+      
+    </div>
   
 
 
 
   <script src="node_modules/jquery/dist/jquery.min.js"> </script>
   <script src="node_modules/handlebars/dist/handlebars.min.js"> </script>
+
   <script id="books-template" type="text/x-handlebars-template">
         {{#each books}}
           <!-- <h6>This book will take you {{minRead}} days to read</h6> -->
+          <div class="book">
+          <img src="{{imageUrl}}" class="book-image">
           <h1>{{title}}</h1>
+          <!-- <p>{{description}}</p> -->
+          <h3>Written by {{author}}</h3>
+          
+          </div>
+          <!-- <p>This book has {{pagesNo}} pages.</p> -->
+          
+        {{/each}}
+          
+  </script>
+
+
+<!--   <script id="books-template" type="text/x-handlebars-template">
+        {{#each books}} -->
+          <!-- <h6>This book will take you {{minRead}} days to read</h6> -->
+<!--           <h1>{{title}}</h1>
           <p>{{description}}</p>
-          <h2>Written by {{author}}</h2>
+          <h3>Written by {{author}}</h3>
           <img src="{{imageUrl}}" class="book-image">
           
           <p>This book has {{pagesNo}} pages.</p>
           
         {{/each}}
           
-  </script>
+  </script> -->
 
   <script type="text/javascript" src="scrips.js"></script>
  
